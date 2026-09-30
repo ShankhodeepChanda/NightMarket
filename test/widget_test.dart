@@ -1,14 +1,31 @@
-// Basic widget test for Night Market app.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:night_market/app/app.dart';
+import 'package:night_market/features/splash/pages/splash_page.dart';
 
 void main() {
-  testWidgets('Night Market app smoke test', (WidgetTester tester) async {
+  testWidgets('Night Market app shows SplashPage initially', (WidgetTester tester) async {
+    // Mock shared preferences
+    SharedPreferences.setMockInitialValues({});
+    
     // Build the app and trigger a frame.
     await tester.pumpWidget(const NightMarketApp());
+
+    // Verify SplashPage is displayed
+    expect(find.byType(SplashPage), findsOneWidget);
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    
+    // Advance time to finish the splash delay
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+  });
+
+  testWidgets('MainScaffold shows bottom navigation', (WidgetTester tester) async {
+    // Build just the MainScaffold
+    await tester.pumpWidget(const MaterialApp(
+      home: MainScaffold(),
+    ));
 
     // Verify the app builds and shows bottom navigation.
     expect(find.byType(BottomNavigationBar), findsOneWidget);

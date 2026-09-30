@@ -6,6 +6,7 @@ import '../features/marketplace/pages/marketplace_page.dart';
 import '../features/profile/pages/profile_page.dart';
 import '../features/skills/pages/skills_page.dart';
 import 'theme/app_theme.dart';
+import '../features/splash/pages/splash_page.dart';
 
 /// The root widget of the Night Market application.
 ///
@@ -22,7 +23,7 @@ class NightMarketApp extends StatelessWidget {
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: const MainScaffold(),
+      home: const SplashPage(),
     );
   }
 }
