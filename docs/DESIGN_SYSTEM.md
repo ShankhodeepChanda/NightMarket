@@ -1,7 +1,7 @@
 # Design System
 
 **Last Updated:** 2026-09-30  
-**Status:** Phase 0 foundation — colors and theme established
+**Status:** Phase 1 complete — tokens, components, states, and image guidelines established
 
 ---
 
@@ -22,61 +22,75 @@ surfaceTint: #6366F1  // Lighter indigo — card overlays
 Generated automatically from `seedColor` via `ColorScheme.fromSeed`:
 
 **Light Mode:**
-- Primary: derived from seed
+- Primary: derived from seed (`#4F46E5`)
 - OnPrimary: contrasting text
 - Secondary, Tertiary: harmonious variants
 - Surface, Background: neutral tones
-- Error: system red
+- Error: system red (`#B3261E`)
 
 **Dark Mode:**
 - Same roles, inverted luminance
-- Follows system dark mode automatically
+- Follows system dark mode automatically (`ThemeMode.system`)
 
 ---
 
 ## Typography
 
-**Font Family:** Roboto (system default)
+**Font Family:** Roboto (system default, Material 3)
 
-Material 3 text theme provides:
-- `displayLarge` / `Medium` / `Small` — hero text
-- `headlineLarge` / `Medium` / `Small` — section headers
-- `titleLarge` / `Medium` / `Small` — card titles, subtitles
-- `bodyLarge` / `Medium` / `Small` — body text
-- `labelLarge` / `Medium` / `Small` — buttons, chips
+### Type Scale
 
-**Future:** May add custom font (e.g., Inter, Poppins) for brand personality.
+| Token            | Usage                        |
+|------------------|------------------------------|
+| `displayLarge`  | Hero / landing headings      |
+| `headlineMedium`| Section headers              |
+| `titleLarge`     | Card titles, section titles  |
+| `titleMedium`    | Subtitles, list item titles  |
+| `bodyMedium`     | Body text                    |
+| `bodySmall`      | Secondary info, captions     |
+| `labelMedium`    | Tags, badges, meta info      |
+| `labelSmall`     | Small tags, footnotes        |
+
+**Future:** May add Inter or Poppins for brand distinction.
 
 ---
 
-## Spacing
+## Spacing (Standardized — Phase 1)
 
-**Not yet standardized.** Currently using hardcoded values.
-
-**Future Phase 1 goal:**
+Centralized in `lib/core/constants/app_spacing.dart`:
 
 ```dart
 class AppSpacing {
-  static const double xs = 4;
-  static const double sm = 8;
-  static const double md = 16;
-  static const double lg = 24;
-  static const double xl = 32;
-  static const double xxl = 48;
+  AppSpacing._();
+  static const double xs  = 4.0;
+  static const double sm  = 8.0;
+  static const double md  = 16.0;
+  static const double lg  = 24.0;
+  static const double xl  = 32.0;
+  static const double xxl = 48.0;
+
+  static const double pageHorizontal = md;   // 16
+  static const double cardPadding     = md;   // 16
+  static const double listItemSpacing = sm;   // 8
+  static const double sectionSpacing   = lg;   // 24
 }
 ```
 
 ---
 
-## Corner Radius
+## Corner Radius (Standardized — Phase 1)
 
-**Current:** Cards use `12px` border radius.
+Centralized in `lib/core/constants/app_radius.dart`:
 
-**Future:** Standardize across components:
-- Small (chips, tags): `8px`
-- Medium (cards, inputs): `12px`
-- Large (sheets, modals): `16px`
-- Full (profile pictures, icon buttons): `circular`
+```dart
+class AppRadius {
+  AppRadius._();
+  static const double sm    = 8.0;   // Chips, tags, small buttons
+  static const double md    = 12.0;  // Cards, inputs, standard surfaces
+  static const double lg    = 16.0;  // Sheets, modals, large surfaces
+  static const double circular = 9999.0; // Avatars, circular icons
+}
+```
 
 ---
 
@@ -84,94 +98,106 @@ class AppSpacing {
 
 Material 3 handles elevation automatically via `colorScheme.shadow` and surface tint.
 
-**Current card elevation:** `1` (subtle)
+- **Card elevation:** `1` (subtle shadow, no heavy elevation)
+- **Button elevation:** Material defaults (`ElevatedButton`: 2, `FilledButton`: 1)
 
 ---
 
-## Components
-
-### Cards
-
-- Border radius: `12px`
-- Elevation: `1`
-- Padding: TBD in Phase 1
-- Used for: products, events, profiles
-
-### Buttons
-
-Material 3 defaults:
-- `ElevatedButton` — primary actions
-- `FilledButton` — strong CTAs
-- `OutlinedButton` — secondary actions
-- `TextButton` — tertiary actions
-
-### Input Fields
-
-- `filled: true`
-- Border: `OutlineInputBorder`
-- Border radius: `12px`
-
-### Bottom Navigation
-
-- Type: `fixed` (labels always visible)
-- Selected color: `primary`
-- Unselected color: `onSurfaceVariant`
-
----
-
-## Component Patterns (Future)
+## Components (Phase 1 Implemented)
 
 ### Product Card
+**File:** `lib/core/widgets/product_card.dart`
 
-**To be designed in Phase 1:**
-- Thumbnail image (square aspect ratio)
-- Title (max 2 lines, ellipsis)
-- Price (prominent)
-- Category tag
-- Seller name
-- Optional: save/bookmark icon
+- Square thumbnail (`1.0` aspect ratio) with gradient placeholder
+- Title (1 line, ellipsis), price (prominent, primary color)
+- Condition tag (`surfaceContainerHighest`), location meta
+- Tapable with `InkWell`
 
 ### Event Card
+**File:** `lib/core/widgets/event_card.dart`
 
-**To be designed in Phase 1:**
-- Banner image (16:9 aspect ratio)
-- Event title
-- Date and time
-- Venue
-- Club badge
-- Registration status
+- Banner image (`16.0 / 9.0` aspect ratio) with gradient placeholder
+- Event title (2 lines max), date/time (`tertiary` color), venue
+- Footer: organizer (left) / attendee count (right)
+- Tapable with `InkWell`
 
-### Profile Card / Student Card
+### Profile Card
+**File:** `lib/core/widgets/profile_card.dart`
 
-**To be designed in Phase 1:**
-- Profile picture (circular)
-- Name
-- College + course
-- Skills chips
-- Rating stars
-- Optional: portfolio preview
+- Circular avatar (`80x80`, gradient with initials)
+- Name (`titleMedium`), college (`bodySmall`)
+- Skills chips (max 3 shown, `+N` overflow)
+- Rating (`star_rounded`, `tertiary`) + review count
+- Tapable with `InkWell`
 
 ---
 
-## States
+## States (Phase 1 Implemented)
 
-### Loading
+### Loading Skeleton
+**File:** `lib/core/widgets/loading_skeleton.dart`
 
-Currently: `CircularProgressIndicator` (default Material)
+Custom shimmer loader with repeating gradient animation (`AnimationController`, `1500ms` duration). Factory constructors:
 
-**Future:** Custom skeleton loaders for cards.
+- `LoadingSkeleton.productCard()`
+- `LoadingSkeleton.eventCard()`
+- `LoadingSkeleton.profileCard()`
 
-### Empty
+Uses theme `surfaceContainerHighest` ↔ `surfaceContainerHigh` colors.
 
-Currently: `PlaceholderPage` widget (icon + text)
+### Empty State
+**File:** `lib/core/widgets/empty_state.dart`
 
-**Future:** Contextual empty states per feature.
+Contextual empty states with semantic factory constructors:
 
-### Error
+- `EmptyState.noMarketplaceListings()`
+- `EmptyState.noEvents()`
+- `EmptyState.noSavedItems()`
+- `EmptyState.noSearchResults()`
+- `EmptyState.noSkills()`
 
-Currently: default error UI
+Includes icon (`primary` at `0.3` opacity), title (`titleLarge`), optional message (`bodyMedium`), and optional `FilledButton` action.
 
-**Future:** Friendly error messages with retry actions.
+### Error State
+**File:** `lib/core/widgets/error_state.dart`
+
+Friendly error messages with retry/action buttons:
+
+- `ErrorState.networkError({onRetry})` — `wifi_off_rounded`
+- `ErrorState.notFound({onGoBack})` — `search_off_rounded`
+- `ErrorState.general({message?, onRetry})` — `error_outline_rounded`
+- `ErrorState.accessDenied({onGoBack})` — `lock_outline_rounded`
+
+Includes error icon (`48px`, `error` color), title (`titleLarge`, `error` color), message (`bodyMedium`, `onSurfaceVariant`), and optional `OutlinedButton.icon` action.
+
+---
+
+## Image Guidelines (Phase 1)
+
+Centralized in `lib/core/constants/app_image_constants.dart`:
+
+```dart
+class AppImageConstants {
+  static const double productAspectRatio   = 1.0;      // Square
+  static const double productAspectRatioWide = 4.0 / 3.0;
+  static const double eventAspectRatio      = 16.0 / 9.0; // Banner
+  static const double profileAspectRatio    = 1.0;      // Square
+
+  static const int maxProductImageSize  = 5 * 1024 * 1024;  // 5MB
+  static const int maxEventImageSize     = 5 * 1024 * 1024;
+  static const int maxProfileImageSize   = 2 * 1024 * 1024;  // 2MB
+
+  static const int compressionQuality  = 85;
+  static const int maxImageDimension    = 2048;
+}
+```
+
+- Product thumbnails: square (`1.0`)
+- Event banners: wide (`16:9`)
+- Profile avatars: square (`1.0`), rendered as circular
+- Max upload sizes enforced per feature type
+- Compression quality: 85%
+- Max dimension: 2048px
 
 ---
 
@@ -179,14 +205,16 @@ Currently: default error UI
 
 **Icon Set:** Material Icons (included with Flutter)
 
-**Key Icons Used:**
-- `home_outlined` — Home
-- `storefront_outlined` — Marketplace
-- `school_outlined` — Community
-- `work_outline` — Skills
-- `person_outline` — Profile
-
-**Future:** May add custom icons for specific features.
+| Feature       | Key Icons                 |
+|---------------|---------------------------|
+| Home          | `home_outlined`           |
+| Marketplace   | `storefront_outlined`     |
+| Community     | `school_outlined`         |
+| Skills        | `work_outline`            |
+| Profile       | `person_outline`          |
+| Loading       | shimmer gradient (custom) |
+| Empty         | `storefront_outlined`, etc.|
+| Error         | `wifi_off_rounded`, etc.  |
 
 ---
 
@@ -194,56 +222,76 @@ Currently: default error UI
 
 Material 3 provides:
 - Sufficient color contrast (WCAG AA minimum)
-- Touch target sizes (48px minimum)
-- Screen reader support via Semantics widgets
+- Touch target sizes (`48px` minimum for interactive elements)
+- Screen reader support (`Semantics` widgets available)
+
+**Phase 1 additions:**
+- Semantic text labels on all cards (`InkWell` provides tap announcements)
+- Clear icon + text pairing on buttons (`FilledButton.icon`, `OutlinedButton.icon`)
 
 **Future improvements:**
-- Explicit semantic labels
-- High contrast mode
-- Reduced motion support
-- Font scaling support
+- Explicit semantic labels for complex cards
+- High contrast mode toggle
+- Reduced motion support (`AnimationController` can respect `MediaQuery.disableAnimations`)
+- Dynamic font scaling (`MediaQuery.textScaler`)
 
 ---
 
 ## Dark Mode
 
-Automatically generated from `ColorScheme.fromSeed` with `brightness: Brightness.dark`.
-
-System preference detected via `ThemeMode.system`.
-
-Users cannot manually toggle yet — follows OS setting.
-
----
-
-## Animation
-
-**Not yet standardized.**
-
-Material 3 provides default transitions.
-
-**Future:** Custom page transitions, micro-interactions for key actions.
+- Automatically generated from `ColorScheme.fromSeed` with `brightness: Brightness.dark`
+- System preference detected via `ThemeMode.system`
+- No manual toggle yet — follows OS setting
+- All Phase 1 components use theme tokens (`colorScheme.primary`, `surfaceVariant`, etc.) to stay theme-aware
 
 ---
 
-## Imagery
+## Animation (Phase 1)
 
-**Not yet defined.**
+- **Skeleton shimmer:** `AnimationController` with `LinearGradient` repeat at `1500ms`
+- **Default Material:** button ripples, card hover (desktop/web future)
 
-**Future Phase 1:**
-- Image aspect ratios (products, events, profiles)
-- Placeholder images
-- Image upload guidelines
-- Image optimization requirements
+**Future:** Page transitions (`PageRouteBuilder`), micro-interactions for key actions.
 
 ---
 
-## Next Steps (Phase 1)
+## Component Patterns (Implemented)
 
-1. Finalize spacing constants
-2. Design product card component
-3. Design event card component
-4. Design profile card component
-5. Design loading skeletons
-6. Design empty states
-7. Design error states
-8. Establish image guidelines
+### Card Pattern (All Cards)
+- `Card(clipBehavior: Clip.antiAlias, margin: EdgeInsets.zero)`
+- `InkWell` for tap feedback
+- Consistent `AppSpacing.md` (`16`) padding inside content areas
+- Gradient placeholders instead of broken image links
+
+### Button Pattern
+- Primary: `FilledButton`
+- Secondary: `OutlinedButton`
+- Tertiary: `TextButton`
+- Action buttons include icon + label pairing
+
+---
+
+## Phase 1 Deliverables Complete
+
+| Deliverable                   | Status | File                        |
+|-------------------------------|--------|-----------------------------|
+| Spacing tokens                | ✅     | `app_spacing.dart`          |
+| Radius tokens                 | ✅     | `app_radius.dart`           |
+| Image constants               | ✅     | `app_image_constants.dart`  |
+| Product card                  | ✅     | `widgets/product_card.dart` |
+| Event card                    | ✅     | `widgets/event_card.dart`   |
+| Profile card                  | ✅     | `widgets/profile_card.dart` |
+| Loading skeleton              | ✅     | `widgets/loading_skeleton.dart` |
+| Empty state                   | ✅     | `widgets/empty_state.dart`  |
+| Error state                   | ✅     | `widgets/error_state.dart`  |
+| Design documentation          | ✅     | `DESIGN_SYSTEM.md`           |
+
+---
+
+## Next Steps (Phase 2 Preview)
+
+1. Integrate card components into actual feature pages (marketplace, events, skills)
+2. Connect to Firebase data streams
+3. Add image upload and validation against `AppImageConstants`
+4. Implement theme mode toggle (manual dark/light override)
+5. Add reduced-motion support
