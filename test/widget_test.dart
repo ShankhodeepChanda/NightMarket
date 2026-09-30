@@ -3,9 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:night_market/app/app.dart';
+import 'package:night_market/core/services/auth_service.dart';
 import 'package:night_market/features/splash/pages/splash_page.dart';
+import 'helpers/mock_auth_service.dart';
 
 void main() {
+  setUp(() {
+    AuthService.setMockInstance(MockAuthService());
+  });
+
   testWidgets('Night Market app shows SplashPage initially', (WidgetTester tester) async {
     // Mock shared preferences
     SharedPreferences.setMockInitialValues({});

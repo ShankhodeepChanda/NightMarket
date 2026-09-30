@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:night_market/app/app.dart';
+import 'package:night_market/app/auth_gate.dart';
+import 'package:night_market/core/services/auth_service.dart';
 import 'package:night_market/features/onboarding/pages/onboarding_page.dart';
+import '../../../helpers/mock_auth_service.dart';
 
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
+    AuthService.setMockInstance(MockAuthService());
   });
 
   Widget buildTestApp() {
@@ -49,21 +52,21 @@ void main() {
     expect(find.text('Get Started'), findsOneWidget); // Changed to Get Started on last page
   });
 
-  testWidgets('Pressing Skip completes onboarding and navigates to Main', (WidgetTester tester) async {
+  testWidgets('Pressing Skip completes onboarding and navigates to AuthGate', (WidgetTester tester) async {
     await tester.pumpWidget(buildTestApp());
 
     await tester.tap(find.text('Skip'));
     await tester.pumpAndSettle();
 
-    // Should navigate to MainScaffold
-    expect(find.byType(MainScaffold), findsOneWidget);
+    // Should navigate to AuthGate
+    expect(find.byType(AuthGate), findsOneWidget);
 
     // has_seen_onboarding should be true
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('has_seen_onboarding'), isTrue);
   });
 
-  testWidgets('Pressing Get Started on last page completes onboarding', (WidgetTester tester) async {
+  testWidgets('Pressing Get Started on last page completes onboarding and navigates to AuthGate', (WidgetTester tester) async {
     await tester.pumpWidget(buildTestApp());
 
     // Go to page 1
@@ -78,8 +81,8 @@ void main() {
     await tester.tap(find.text('Get Started'));
     await tester.pumpAndSettle();
 
-    // Should navigate to MainScaffold
-    expect(find.byType(MainScaffold), findsOneWidget);
+    // Should navigate to AuthGate
+    expect(find.byType(AuthGate), findsOneWidget);
 
     // has_seen_onboarding should be true
     final prefs = await SharedPreferences.getInstance();

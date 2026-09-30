@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../app/app.dart';
+import '../../../../app/auth_gate.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/constants/app_radius.dart';
 
@@ -40,7 +40,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (!mounted) return;
 
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const MainScaffold()),
+      MaterialPageRoute(builder: (_) => const AuthGate()),
     );
   }
 

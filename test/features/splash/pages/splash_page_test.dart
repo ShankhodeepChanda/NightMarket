@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:night_market/app/app.dart';
+import 'package:night_market/app/auth_gate.dart';
+import 'package:night_market/core/services/auth_service.dart';
 import 'package:night_market/features/splash/pages/splash_page.dart';
 import 'package:night_market/features/onboarding/pages/onboarding_page.dart';
+import '../../../helpers/mock_auth_service.dart';
 
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
+    AuthService.setMockInstance(MockAuthService());
   });
 
   Widget buildTestApp() {
@@ -37,10 +40,10 @@ void main() {
 
     // Should navigate to Onboarding
     expect(find.byType(OnboardingPage), findsOneWidget);
-    expect(find.byType(MainScaffold), findsNothing);
+    expect(find.byType(AuthGate), findsNothing);
   });
 
-  testWidgets('Navigates to MainScaffold when onboarding already seen', (WidgetTester tester) async {
+  testWidgets('Navigates to AuthGate when onboarding already seen', (WidgetTester tester) async {
     // Set has_seen_onboarding = true
     SharedPreferences.setMockInitialValues({'has_seen_onboarding': true});
 
@@ -49,8 +52,8 @@ void main() {
     // Advance 2 seconds
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
-    // Should navigate to MainScaffold
-    expect(find.byType(MainScaffold), findsOneWidget);
+    // Should navigate to AuthGate
+    expect(find.byType(AuthGate), findsOneWidget);
     expect(find.byType(OnboardingPage), findsNothing);
   });
 }

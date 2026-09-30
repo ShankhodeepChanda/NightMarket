@@ -184,3 +184,64 @@ Approximately 30-40 minutes of active implementation.
 - Goal 1
 - Goal 2
 ```
+
+## Session 2-3 — 2026-09-30
+
+**Phase:** Phase 1 — Design System
+
+### Completed
+- [x] Extracted design components into core/constants/design_tokens.dart
+- [x] Built reusable components (LoadingSkeleton, EmptyState, ErrorState)
+- [x] Built core card widgets (ProductCard, EventCard, ProfileCard)
+
+### Code Changes
+- Modified: pubspec.yaml
+- Created: lib/core/widgets/card_wrappers.dart, design_tokens.dart, empty_state.dart, error_state.dart, etc.
+
+### What Works Now
+✅ Centralized Design System using Semantic Colors and Spacings
+
+---
+
+## Session 4 — 2026-09-30
+
+**Phase:** Phase 2 — Basic App Shell
+
+### Completed
+- [x] Developed SplashPage
+- [x] Developed OnboardingPage with multiple pages and shared preferences to detect first startup
+- [x] Complete Widget test coverage for Splash and Onboarding
+
+### Code Changes
+- Created: splash_page.dart, onboarding_page.dart
+- Created: tests for the new flows
+
+---
+
+## Session 5 — 2026-09-30
+
+**Phase:** Phase 3 — Authentication
+
+### Completed
+- [x] Setup Firebase core dependencies
+- [x] Developed AuthService as a singleton with mock capabilities for tests
+- [x] UI implementation for LoginPage, RegisterPage, ForgotPasswordPage
+- [x] Integrated AuthGate for stream-based routing
+- [x] Replaced routing flows in Splash and Onboarding to land correctly at AuthGate
+- [x] Comprehensive testing strategy without needing actual Firebase connection
+
+### Code Changes
+- Modified: main.dart, splash_page_test.dart, onboarding_page_test.dart, widget_test.dart
+- Created: lib/app/auth_gate.dart, lib/core/services/auth_service.dart, lib/features/auth/...
+- Created: 	est/helpers/mock_auth_service.dart, 	est/features/auth/pages/auth_pages_test.dart
+
+### Decisions Made
+| Decision | Rationale |
+|----------|-----------|
+| AuthService with mock injector | Isolates widget tests from running actual platform channels |
+| AuthGate as routing root | Easiest reactive model to ensure user state pushes correct screens |
+
+### What Works Now
+✅ Complete auth UI navigation flows
+✅ Testable UI layer with mock injection
+✅ Solid widget test coverage

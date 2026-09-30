@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../app/app.dart';
+import '../../../../app/auth_gate.dart';
 import '../../onboarding/pages/onboarding_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
 
     if (hasSeenOnboarding) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const MainScaffold()),
+        MaterialPageRoute(builder: (_) => const AuthGate()),
       );
     } else {
       Navigator.of(context).pushReplacement(
