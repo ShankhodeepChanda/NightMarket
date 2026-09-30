@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_spacing.dart';
+import '../constants/app_radius.dart';
 
 /// A reusable card component for displaying marketplace products.
 class ProductCard extends StatelessWidget {
@@ -99,7 +100,7 @@ class ProductCard extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: colorScheme.surfaceContainerHighest,
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
                         ),
                         child: Text(
                           condition,

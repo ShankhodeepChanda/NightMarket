@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants/app_spacing.dart';
 
 /// A simple placeholder page displayed for features that are not yet built.
 ///
@@ -21,7 +22,7 @@ class PlaceholderPage extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(AppSpacing.xl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -30,14 +31,14 @@ class PlaceholderPage extends StatelessWidget {
               size: 64,
               color: theme.colorScheme.primary.withValues(alpha: 0.5),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
             Text(
               title,
               style: theme.textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             if (subtitle != null) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 subtitle!,
                 style: theme.textTheme.bodyMedium?.copyWith(

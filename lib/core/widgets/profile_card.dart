@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_spacing.dart';
+import '../constants/app_radius.dart';
 
 /// A reusable card component for displaying user/skill provider profiles.
 class ProfileCard extends StatelessWidget {
@@ -117,7 +118,7 @@ class ProfileCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: colorScheme.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(AppRadius.lg),
                           ),
                           child: Text(
                             skill,

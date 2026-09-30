@@ -4,6 +4,10 @@
 class AppRadius {
   AppRadius._(); // Private constructor to prevent instantiation
 
+  /// Extra small radius: 4px
+  /// Use for: very tiny badges or condition tags
+  static const double xs = 4.0;
+
   /// Small radius: 8px
   /// Use for: chips, tags, small buttons
   static const double sm = 8.0;
