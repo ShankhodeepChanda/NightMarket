@@ -1,17 +1,91 @@
-# first_app
+# Night Market
 
-A new Flutter project.
+> Your campus, connected.
+
+Night Market is a mobile app for college students that combines a **Marketplace**, **College Community**, and **Student Skills Marketplace** into one unified campus ecosystem.
+
+## What It Does
+
+- **🛒 Marketplace** — Buy and sell textbooks, electronics, furniture, and more within your college.
+- **🎓 Community** — Discover clubs, events, and announcements across campus.
+- **💼 Skills** — Offer services, find freelancers, post jobs, and build your reputation.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Flutter + Dart |
+| Backend | Firebase (Auth, Firestore, Storage, FCM) |
+| Platform | Android (primary), iOS (future) |
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK 3.13.4+
+- Android SDK 36+
+- Git
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### Setup
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+git clone https://github.com/<your-username>/night-market.git
+cd night-market
+flutter pub get
+flutter run
+```
+
+### Running Tests
+
+```bash
+flutter test
+```
+
+### Code Analysis
+
+```bash
+flutter analyze
+```
+
+## Project Structure
+
+```
+lib/
+├── app/              # App configuration, theme, routing
+│   ├── theme/        # Material 3 light/dark themes
+│   └── router/       # Route constants
+├── core/             # Shared infrastructure
+│   ├── constants/    # App-wide constants
+│   └── widgets/      # Reusable widgets
+└── features/         # Business features
+    ├── home/
+    ├── marketplace/
+    ├── community/
+    ├── skills/
+    └── profile/
+```
+
+## Current Status
+
+**Phase 0 — Foundation** ✅
+
+See [docs/ROADMAP.md](docs/ROADMAP.md) for the full development plan.
+
+## Documentation
+
+Detailed docs live in the [`docs/`](docs/) directory:
+
+- [Project Overview](docs/PROJECT.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Database Schema](docs/DATABASE.md)
+- [Features](docs/FEATURES.md)
+- [Design System](docs/DESIGN_SYSTEM.md)
+- [Security](docs/SECURITY.md)
+- [Development Log](docs/DEVELOPMENT_LOG.md)
+- [Decisions (ADRs)](docs/DECISIONS.md)
+- [Known Issues](docs/KNOWN_ISSUES.md)
+- [Roadmap](docs/ROADMAP.md)
+
+## License
+
+Private — not open source.
