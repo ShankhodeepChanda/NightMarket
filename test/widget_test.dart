@@ -5,11 +5,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:night_market/app/app.dart';
 import 'package:night_market/core/services/auth_service.dart';
 import 'package:night_market/features/splash/pages/splash_page.dart';
+import 'package:night_market/features/profile/services/profile_service.dart';
 import 'helpers/mock_auth_service.dart';
+import 'helpers/mock_profile_service.dart';
 
 void main() {
   setUp(() {
     AuthService.setMockInstance(MockAuthService());
+    ProfileService.setMockInstance(MockProfileService());
+  });
+
+  tearDown(() {
+    AuthService.resetMockInstance();
+    ProfileService.resetMockInstance();
   });
 
   testWidgets('Night Market app shows SplashPage initially', (WidgetTester tester) async {

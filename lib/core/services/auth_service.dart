@@ -26,6 +26,11 @@ class AuthService {
     _mockInstance = mock;
   }
 
+  @visibleForTesting
+  static void resetMockInstance() {
+    _mockInstance = null;
+  }
+
   factory AuthService() {
     if (_mockInstance != null) return _mockInstance!;
     return AuthService._internal();

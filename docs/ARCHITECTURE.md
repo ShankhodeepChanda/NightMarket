@@ -46,8 +46,13 @@ lib/
 │   │   └── pages/
 │   │       └── skills_page.dart
 │   └── profile/
+│       ├── models/
+│       │   └── user_profile.dart
+│       ├── services/
+│       │   └── profile_service.dart
 │       └── pages/
-│           └── profile_page.dart
+│           ├── profile_page.dart
+│           └── edit_profile_page.dart
 └── shared/                           # (Future: cross-feature models/widgets)
 ```
 
@@ -106,7 +111,7 @@ Services to be added in `core/services/`:
 - `firebase_service.dart` — initialization
 - `auth_service.dart` — authentication
 - `firestore_service.dart` — database access
-- `storage_service.dart` — file uploads
+- `ProfileService` — singleton proxy for Firestore and Storage with mock injection
 
 ## Platform-Specific Code
 

@@ -145,6 +145,50 @@ Approximately 30-40 minutes of active implementation.
 
 ---
 
+## Session 6 — 2026-10-01
+
+**Phase:** Phase 4 — User Profile
+
+### Completed
+- [x] Created `UserProfile` model (`models/user_profile.dart`) with `fromMap`/`toMap`, `copyWith`, `initials`
+- [x] Created `ProfileService` singleton with mock injection (`services/profile_service.dart`)
+- [x] Updated `ProfilePage` with `FutureBuilder`, `LoadingSkeleton`, `ErrorState`, `ProfileCard`, setup prompt
+- [x] Created `EditProfilePage` with name/college/bio fields, skills chips (max 5), image picker preview, save actions
+- [x] Added `MockProfileService`, `MockAuthServiceWithUser`, `FakeFirebaseUser` test helpers
+- [x] Wrote 6 profile page widget tests and 13 edit profile widget tests
+- [x] Fixed `widget_test.dart` legacy failure by adding mock instances
+- [x] Updated documentation (`ARCHITECTURE.md`, `DEVELOPMENT_LOG.md`, `ROADMAP.md`)
+- [x] `flutter analyze` clean, `flutter test`: 31/31 passing
+
+### Code Changes
+- Modified: `docs/ARCHITECTURE.md`, `test/widget_test.dart`
+- Created: `lib/features/profile/models/user_profile.dart`, `lib/features/profile/services/profile_service.dart`, `lib/features/profile/pages/edit_profile_page.dart`
+- Updated: `lib/features/profile/pages/profile_page.dart`
+- Created test helpers: `test/helpers/mock_profile_service.dart`, `test/helpers/mock_auth_service_with_user.dart`, `test/helpers/fake_firebase_user.dart`
+- Created tests: `test/features/profile/pages/profile_page_test.dart`, `test/features/profile/pages/edit_profile_page_test.dart`
+
+### Decisions Made
+| Decision | Rationale |
+|----------|-----------|
+| Singleton + mock injector for ProfileService | Keeps widget tests isolated from Firebase SDK |
+| `FutureBuilder` on ProfilePage | Clean reactive loading/error/loaded states |
+| Skills capped at 5 | Matches design spec, prevents overflow |
+| `copyWith` on UserProfile | Easy immutable updates in edit flow |
+
+### Issues Encountered
+1. `widget_test.dart` failed due to `ProfileService` initializing Firebase — resolved by adding mock instances in setUp
+2. Off-screen taps in `SingleChildScrollView` — resolved with `tapVisible()` using `ensureVisible()`
+3. `use_null_aware_elements` lint on `photoUrl` — resolved by assigning outside literal
+
+### What's Still Broken
+❌ None — Phase 4 fully verified.
+
+### Next Session Goals
+- Do not proceed to Phase 5 until explicitly instructed.
+- Update `ROADMAP.md` to mark Phase 4 complete.
+
+---
+
 ## Template for Future Sessions
 
 ```markdown
