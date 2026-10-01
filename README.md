@@ -65,11 +65,6 @@ lib/
     └── profile/
 ```
 
-## Current Status
-
-**Phase 0 — Foundation** ✅
-
-See [docs/ROADMAP.md](docs/ROADMAP.md) for the full development plan.
 
 ## Documentation
 
